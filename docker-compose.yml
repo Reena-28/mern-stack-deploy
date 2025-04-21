@@ -1,0 +1,39 @@
+version: '3.8'
+services:
+  front:
+    build: ./public
+    ports:
+      - "3000:3000"
+    networks:
+      - mern-network
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+  api:
+    build: ./server
+    ports:
+      - "5001:5001"
+    networks:
+      - mern-network
+    deploy:
+      replicas: 2
+      resources:
+        limits:
+          cpus: '0.5'
+          memory: 512M
+      restart_policy:
+        condition: on-failure
+networks:
+  mern-network:
+    driver: overlay
+      
+      
+
+
+
+  
