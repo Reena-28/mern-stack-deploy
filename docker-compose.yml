@@ -1,7 +1,7 @@
 version: "3.8"
 services:
   frontend:
-    image: xanderbilla/frontend:latest
+    image: reenasree/frontend:latest
     deploy:
       replicas: 3
       update_config:
@@ -26,7 +26,7 @@ services:
       - backend
 
   backend:
-    image: xanderbilla/backend:latest
+    image: reenasree/backend:latest
     deploy:
       replicas: 2
       update_config:
