@@ -1,39 +1,31 @@
-version: '3.8'
+version: "3.8"
 services:
-  front:
-    build: ./public
+  frontend:
+    image: reenasree/frontend
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
     ports:
       - "3000:3000"
     networks:
-      - mern-network
+      - fitmitra_network
+
+  backend:
+    image: reenasree/backend
     deploy:
       replicas: 2
       resources:
         limits:
-          cpus: '0.5'
-          memory: 512M
-      restart_policy:
-        condition: on-failure
-  api:
-    build: ./server
+          cpus: "1"
+          memory: 1G
     ports:
-      - "5001:5001"
+      - "5000:5000"
     networks:
-      - mern-network
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: '0.5'
-          memory: 512M
-      restart_policy:
-        condition: on-failure
+      - fitmitra_network
+
 networks:
-  mern-network:
-    driver: overlay
-      
-      
-
-
-
-  
+  fitmitra_network:
+    driver: overlay
