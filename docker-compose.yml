@@ -1,42 +1,9 @@
 version: "3.8"
 services:
-  frontend:
-    image: reenasree/frontend:latest
-    deploy:
-      replicas: 3
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-firstlocalhost:8000
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 500M
-    ports:
-      - "8000:80"
-    environment:
-      - REACT_APP_API_URL=http://backend:5000
-    networks:
-      - fitmitra_network
-    depends_on:
-      - backend
-
   backend:
     image: reenasree/backend:latest
     deploy:
       replicas: 2
-      update_config:
-        parallelism: 1
-        delay: 10s
-        order: start-first
-      restart_policy:
-        condition: on-failure
-        delay: 5s
-        max_attempts: 3
       resources:
         limits:
           cpus: "1"
@@ -47,6 +14,23 @@ services:
       - NODE_ENV=production
     networks:
       - fitmitra_network
+
+  frontend:
+    image: reenasree/frontend:latest
+    deploy:
+      replicas: 3
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
+    ports:
+      - "3000:80"
+    environment:
+      - REACT_APP_API_URL=http://backend:5000
+    networks:
+      - fitmitra_network
+    depends_on:
+      - backend
 
 networks:
   fitmitra_network:
