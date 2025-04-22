@@ -1,31 +1,29 @@
 version: "3.8"
 services:
   frontend:
-    image: reenasree/frontend
-    deploy:
-      replicas: 3
-      resources:
-        limits:
-          cpus: "0.5"
-          memory: 500M
+    build:
+      context: ./public
+      dockerfile: Dockerfile
     ports:
-      - "3000:3000"
+      - "8000:80"
+    environment:
+      - REACT_APP_API_URL=http://localhost:5000
     networks:
       - fitmitra_network
+    depends_on:
+      - backend
 
   backend:
-    image: reenasree/backend
-    deploy:
-      replicas: 2
-      resources:
-        limits:
-          cpus: "1"
-          memory: 1G
+    build:
+      context: ./server
+      dockerfile: Dockerfile
     ports:
       - "5000:5000"
+    environment:
+      - NODE_ENV=production
     networks:
       - fitmitra_network
 
 networks:
   fitmitra_network:
-    driver: overlay
+    driver: bridge
