@@ -1,22 +1,46 @@
 version: "3.8"
 services:
   frontend:
-    build:
-      context: ./public
-      dockerfile: Dockerfile
+    image: xanderbilla/frontend:latest
+    deploy:
+      replicas: 3
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 500M
     ports:
       - "8000:80"
     environment:
-      - REACT_APP_API_URL=http://localhost:5000
+      - REACT_APP_API_URL=http://backend:5000
     networks:
       - fitmitra_network
     depends_on:
       - backend
 
   backend:
-    build:
-      context: ./server
-      dockerfile: Dockerfile
+    image: xanderbilla/backend:latest
+    deploy:
+      replicas: 2
+      update_config:
+        parallelism: 1
+        delay: 10s
+        order: start-first
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+      resources:
+        limits:
+          cpus: "1"
+          memory: 1G
     ports:
       - "5000:5000"
     environment:
@@ -26,4 +50,4 @@ services:
 
 networks:
   fitmitra_network:
-    driver: bridge
+    driver: overlay
