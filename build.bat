@@ -24,8 +24,8 @@ echo %NEW_VERSION% > "%VERSION_FILE%"
 
 REM Build Docker images
 echo Building Docker images...
-docker build -t %DOCKER_USERNAME%/%CLIENT_IMAGE_NAME%:latest -t %DOCKER_USERNAME%/%CLIENT_IMAGE_NAME%:%NEW_VERSION% .
-docker build -t %DOCKER_USERNAME%/%API_IMAGE_NAME%:latest -t %DOCKER_USERNAME%/%API_IMAGE_NAME%:%NEW_VERSION% .
+docker build -t %DOCKER_USERNAME%/%CLIENT_IMAGE_NAME%:latest -t %DOCKER_USERNAME%/%CLIENT_IMAGE_NAME%:%NEW_VERSION% ./public/.
+docker build -t %DOCKER_USERNAME%/%API_IMAGE_NAME%:latest -t %DOCKER_USERNAME%/%API_IMAGE_NAME%:%NEW_VERSION% ./server/.
 
 REM Push Docker images to Docker Hub
 echo Pushing Docker images to Docker Hub...
