@@ -1,31 +1,23 @@
-FROM node:16-alpine
+# Build phase
+FROM node:18-alpine AS build
 
 WORKDIR /app
 COPY package*.json ./
 RUN npm install
 COPY . .
-EXPOSE 3000
+RUN npm run build
 
-CMD ["npm","start"]
+# Serve with nginx
+FROM nginx:alpine
 
+# Copy built files from previous stage
+COPY --from=build /app/build /usr/share/nginx/html
 
-# # Build phase
-# FROM node:18-alpine AS build
+# Copy nginx configuration
+COPY nginx.conf /etc/nginx/conf.d/default.conf
 
-# WORKDIR /app
-# COPY package*.json ./
-# RUN npm install
-# COPY . .
-# RUN npm run build
+# Expose port 80
+EXPOSE 80
 
-# # Serve with nginx
-# FROM nginx:alpine
-
-# # Copy built files from previous stage
-# COPY --from=build /app/dist /usr/share/nginx/html
-
-# # Expose port 80
-# EXPOSE 80
-
-# # Start nginx
-# CMD ["nginx", "-g", "daemon off;"]
+# Start nginx
+CMD ["nginx", "-g", "daemon off;"]
