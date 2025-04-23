@@ -12,7 +12,6 @@ services:
       - "5000:5000"
     environment:
       - NODE_ENV=production
-      - MONGO_URI=mongodb+srv://kreenasree:bxXM94bqfLgPipDd@cluster0.dp8maob.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0
     networks:
       - fitmitra_network
 
