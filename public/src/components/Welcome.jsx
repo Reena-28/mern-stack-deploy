@@ -16,7 +16,7 @@ export default function Welcome() {
       <h1>
         Welcome, <span>{userName}!</span>
       </h1>
-      <h3>Share with your friends!!!</h3>
+      <h3>Share with your friends!!</h3>
     </Container>
   );
 }
