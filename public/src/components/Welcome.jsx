@@ -16,7 +16,7 @@ export default function Welcome() {
       <h1>
         Welcome, <span>{userName}!</span>
       </h1>
-      <h3>Everything is working.</h3>
+      <h3>Yohohoho!!!!</h3>
     </Container>
   );
 }
